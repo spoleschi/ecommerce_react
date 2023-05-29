@@ -6,15 +6,15 @@ import BotonStyle from './components/BotonStyle/BotonStyle';
 import NabvarMondony from './components/Navbar/Navbar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer'
 
-import NavbarBard from './components/Navbar/NavbarBard'
+// import NavbarBard from './components/Navbar/NavbarBard'
 
 
 function App() {
   return (
     <div className="App">
-      {/* <NavScroll/> */}
+      <NavScroll/>
       {/* <NabvarMondony/> */}
-     <NavbarBard/>
+     {/* <NavbarBard/> */}
       <ItemListContainer greeting = {'Hola'} />
      
 
