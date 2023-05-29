@@ -1,0 +1,24 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+  }
+  
+  .navbar a {
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .navbar a.active {
+    color: #fff;
+    background-color: #000;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+    }
+  }
