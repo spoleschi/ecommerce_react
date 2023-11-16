@@ -7,33 +7,27 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 //import './NavScroll.css';
 import './Navbar.css';
 import CartWidget from '../CartWidget/CartWidget';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 function NavScroll() {
+
+  //Tambien puedo navergar con el Hook useNavigate
+  const navigate = useNavigate();
+
   return (
     <>
-    <style type="text/css">
-    {`
-    .bg-blue {
-        background-color: blue;
-        color: white;
-    }
-
-    // .nav-link {
-    //     color: red;
-    // }
-
-    `}
-    </style>
-
     <Navbar bg="light" variant="light"  expand="lg">
       <Container fluid>
         {/* <Navbar.Brand href="#">Navbar scroll</Navbar.Brand> */}
 
-        <Navbar.Brand href="#home">
-          <a class="navbar-brand logo ml-3" href="./index.html"> 
-              <p class="logo1">Mondony</p>
-              <p class="logo2">Muebles, arte y diseño</p>
-          </a>
+        {/* <Navbar.Brand href="/"> */}
+
+        {/* Puedo utilizar el as={Link} para implementar la navegación y no tengo que cambiar componentes ni clases */}
+        <Navbar.Brand as={Link} to='/'>
+          <div className="navbar-brand logo ml-3"> 
+              <p className="logo1">TecnoPol</p>
+              <p className="logo2">Tecnología de vanguardia</p>
+          </div>
         </Navbar.Brand> 
 
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -43,8 +37,17 @@ function NavScroll() {
             // style={{ maxHeight: '200px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
+            {/* <Nav.Link href="#action1">Home</Nav.Link> */}
+
+            {/* <Link to="/auriculares" className="nav-link">Auriculares</Link>
+            <Link to="/celulares" className="nav-link">Celulares</Link> */}
+            {/* <Nav.Link href="/celulares">Celulares</Nav.Link> */}
+            <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link' }>Home</NavLink>
+            <NavLink to="/auriculares" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link' }>Auricaulares</NavLink>
+            {/* <NavLink to="/celulares" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link' }>Celulares</NavLink> */}
+            <Nav.Link onClick={() => navigate('/celulares')} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link' }>Celulares</Nav.Link>
+            <NavLink to="/notebooks" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link' }>Notebooks</NavLink>
+            
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -59,15 +62,15 @@ function NavScroll() {
               Link
             </Nav.Link>
           </Nav>
-          <Form className="d-flex me-2">
+          <Form className="d-flex my-2 me-2">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success me-2">Search</Button>
-            <CartWidget/>
+            <Button variant="outline-dark me-2">Search</Button>
+            <CartWidget />
           </Form>
         </Navbar.Collapse>
       </Container>

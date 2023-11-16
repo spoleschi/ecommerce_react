@@ -1,0 +1,24 @@
+.border0{
+    border: 0;
+}
+
+.card-head{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.card-addProd{
+    margin:auto;
+    max-width: 450px;
+}
+
+.carousel{
+    margin: auto;
+    width: 50%;
+    max-width: 450px;
+    /*  min-height: 374px; */
+}
+
+.carousel-dark .carousel-caption{
+    color: gray;
+}
