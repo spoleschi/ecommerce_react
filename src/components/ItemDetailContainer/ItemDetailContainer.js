@@ -10,12 +10,12 @@ const ItemDetailContainer = ({ id }) =>  {
   const [product, setProduct] = useState('');
   const [loading, setLoading] = useState(true);
   const { productId } = useParams();
-  console.log(productId);
+  // console.log(productId);
 
   useEffect(()=>{
-    console.log('entra'); 
-    console.log({ productId });
-    console.log(productId);
+    // console.log('entra'); 
+    // console.log({ productId });
+    // console.log(productId);
     getProductById( {productId} ).then(response => {
        setProduct(response);
     })

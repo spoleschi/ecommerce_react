@@ -1,12 +1,14 @@
 // import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ItemCount from '../ItemCount/ItemCount';
 import ItemCant from '../ItemCount/ItemCant';
 // import ProductSlider from '../ProductSlider/ProductSlider';
 import './ItemDetail.css';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link, useNavigate } from 'react-router-dom';
+import { CartContext } from '../../context/CartContext';
+
 
 
 const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
@@ -17,12 +19,32 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
 
   const [inputType, setInputType] = useState('button')
 
+  // function onAddhandler(cant) {
+  //   // setStock(setStock - cant)
+  //   if (cant <= stock)
+  //   {
+  //     cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
+  //     setCantSel(cant)
+  //     // setStock(stock-cant); 
+  //   }
+  //   else
+  //   {
+  //     console.log('No hay stock suficiente.');
+  //     alert('No hay stock suficiente');
+  //   }
+  // };
+
+  const {addItem} = useContext(CartContext); 
+  // console.log (addItem);
+
   function onAddhandler(cant) {
     // setStock(setStock - cant)
     if (cant <= stock)
     {
       cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
-      setCantSel(cant)
+      const productToAdd  = {id, title, price, cant}
+      setCantSel(cant);
+      addItem(productToAdd);
       // setStock(stock-cant); 
     }
     else
@@ -31,6 +53,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
       alert('No hay stock suficiente');
     }
   };
+
 
   const Count = inputType === 'button' ? ItemCount : ItemCant
 
