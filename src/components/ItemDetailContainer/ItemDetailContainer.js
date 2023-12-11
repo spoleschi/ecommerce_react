@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 // import { getNotes } from '../../asyncMock'
 import { getProductById } from '../../asyncMock';
 import ItemDetail from "../ItemDetail/ItemDetail";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const ItemDetailContainer = ({ id }) =>  {
@@ -10,6 +10,7 @@ const ItemDetailContainer = ({ id }) =>  {
   const [product, setProduct] = useState('');
   const [loading, setLoading] = useState(true);
   const { productId } = useParams();
+  const navigate = useNavigate();
   // console.log(productId);
 
   useEffect(()=>{
@@ -37,6 +38,7 @@ const ItemDetailContainer = ({ id }) =>  {
   return (
     <div>
       <ItemDetail {...product}/>
+      <button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)}> Volver </button>
     </div>
   )
 }

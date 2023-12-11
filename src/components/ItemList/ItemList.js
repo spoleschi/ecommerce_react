@@ -1,6 +1,7 @@
-import Item from "../Item/Item";
+// import Item from "../Item/Item";
 import ItemCard from "../ItemCard/ItemCard";
 import './ItemList.css';
+// import { memo } from 'react';
 
 const ItemList = ( props ) => {
   
@@ -17,3 +18,4 @@ const ItemList = ( props ) => {
 } 
 
 export default ItemList;
+// export default memo(ItemList);

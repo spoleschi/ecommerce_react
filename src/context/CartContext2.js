@@ -1,11 +1,11 @@
 import { React, useState, createContext } from 'react'
 
-export const CartContext = createContext({
+export const CartContext2 = createContext({
 	cart: 0,
 	cantTot: 0,
 });
 
-export const CartProvider = ( {children} ) => {
+export const CartProvider2 = ( {children} ) => {
 
 	const [cart, setCart] = useState([]);
 	const [cantTot, setCantTot] = useState(0);
@@ -16,9 +16,10 @@ export const CartProvider = ( {children} ) => {
 		if (!isInCart(productToAdd.id)){
 			setCart ([...cart,productToAdd]);
 			setCantTot(cantTot+Number(productToAdd.cant));
+			return true;
 		}
 			
-		else console.log('Ya se agregó ese producto previamente');
+		else return false;
 	}
 
 	const isInCart = (id) => {
@@ -31,9 +32,9 @@ export const CartProvider = ( {children} ) => {
 	// }
 
 	return (
-		<CartContext.Provider value={{ cart, addItem, cantTot }}>
+		<CartContext2.Provider value={{ cart, addItem, cantTot }}>
 			{children}
-		</CartContext.Provider>
+		</CartContext2.Provider>
 	)
 
 }

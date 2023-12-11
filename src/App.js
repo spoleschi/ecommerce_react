@@ -13,11 +13,10 @@ import ItemListContainer from './components/ItemListContainer/ItemListContainer'
 
 import { React} from 'react';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
+import { CartProvider2 } from './context/CartContext2';
+import { NotificationProvider } from './Notification/NotificationServices';
 
-// import NavbarBard from './components/Navbar/NavbarBard'
 
 function App() {
   
@@ -25,19 +24,20 @@ function App() {
 
   return (
     <div className="App">
-      <CartProvider>
-        <BrowserRouter>
-          <NavScroll/>
-          {/* <NavbarBard /> */}
-          
-          <Routes>
-            <Route path='/' element={<ItemListContainer greeting = {'Listado de Productos'} />} />
-            <Route path='/:categoryId' element={<ItemListContainer greeting = {'Listado de Productos'} />} />
-            <Route path='/detail/:productId' element={<ItemDetailContainer id = {'1'} />}/>
-            <Route path='*' element={<h1>404 not found</h1>} />
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
+      <NotificationProvider>
+        <CartProvider2>
+          <BrowserRouter>
+            <NavScroll/>
+            {/* <NavbarBard /> */}
+            <Routes>
+              <Route path='/' element={<ItemListContainer greeting = {'Listado de Productos'} />} />
+              <Route path='/:categoryId' element={<ItemListContainer greeting = {'Listado de Productos'} />} />
+              <Route path='/detail/:productId' element={<ItemDetailContainer id = {'1'} />}/>
+              <Route path='*' element={<h1>404 not found</h1>} />
+            </Routes>
+          </BrowserRouter>
+        </CartProvider2>
+      </NotificationProvider>
       
       {/* <NabvarMondony/> */}
       {/* <NavbarBard/> */}
