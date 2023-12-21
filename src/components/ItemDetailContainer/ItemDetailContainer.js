@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { getProductById } from '../../asyncMock';
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams, useNavigate } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 
 const ItemDetailContainer = ({ id }) =>  {
@@ -17,13 +19,30 @@ const ItemDetailContainer = ({ id }) =>  {
     // console.log('entra'); 
     // console.log({ productId });
     // console.log(productId);
-    getProductById( {productId} ).then(response => {
-       setProduct(response);
+   
+    const docRef = doc(db,'products', productId);
+   
+    getDoc(docRef).then(response => {
+      // const data = response.data();
+
+      console.log(response.data());
+
+      let jsonArray = JSON.parse(response.data().galery);
+
+      const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
+      setProduct(productAdapted);
+    }).finally(() => {
+        setLoading(false);
     })
-    .catch(error => console.log(error.message))
-    .finally(() => {
-      setLoading(false);
-    })
+
+
+    // getProductById( {productId} ).then(response => {
+    //    setProduct(response);
+    // })
+    // .catch(error => console.log(error.message))
+    // .finally(() => {
+    //   setLoading(false);
+    // })
   },[productId]);
 
   
