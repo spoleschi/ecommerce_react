@@ -118,6 +118,14 @@ export const getProducts = () => {
   })
 }
 
+// export const getProducts = () => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       throw "Error2"; 
+//     }, 2000)
+//   })
+// }
+
 export const getProductById = ( {productId} ) => {
   return new Promise((resolve) => {
     setTimeout(() => {

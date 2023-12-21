@@ -1,12 +1,15 @@
 // import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ItemCount from '../ItemCount/ItemCount';
 import ItemCant from '../ItemCount/ItemCant';
 // import ProductSlider from '../ProductSlider/ProductSlider';
 import './ItemDetail.css';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link, useNavigate } from 'react-router-dom';
+import { CartContext2 } from '../../context/CartContext2';
+import { NotificationContext } from '../../Notification/NotificationServices';
+
 
 
 const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
@@ -17,12 +20,38 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
 
   const [inputType, setInputType] = useState('button')
 
+  // function onAddhandler(cant) {
+  //   // setStock(setStock - cant)
+  //   if (cant <= stock)
+  //   {
+  //     cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
+  //     setCantSel(cant)
+  //     // setStock(stock-cant); 
+  //   }
+  //   else
+  //   {
+  //     console.log('No hay stock suficiente.');
+  //     alert('No hay stock suficiente');
+  //   }
+  // };
+
+  const {addItem} = useContext(CartContext2); 
+  // console.log (addItem);
+  const { setNotification } = useContext(NotificationContext);
+
   function onAddhandler(cant) {
     // setStock(setStock - cant)
     if (cant <= stock)
     {
-      cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
-      setCantSel(cant)
+      
+      const productToAdd  = {id, title, price, cant}
+      setCantSel(cant);
+      if (addItem(productToAdd)){
+        // cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
+        cant > 1 ? setNotification(`Se agregaron ${cant} unidades al carrito`, 'success') : setNotification('Se agregó 1 unidad al carrito.','success');
+      }
+      else setNotification('Ya se agregó ese producto previamente', 'successerror') ; 
+      // console.log('Ya se agregó ese producto previamente');
       // setStock(stock-cant); 
     }
     else
@@ -31,6 +60,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
       alert('No hay stock suficiente');
     }
   };
+
 
   const Count = inputType === 'button' ? ItemCount : ItemCant
 
@@ -71,7 +101,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
         {cantSel === 0 ? 
           <div>
             <Count stock={stock} onAdd={onAddhandler}/> 
-            <button onClick={() => setInputType(inputType === 'button' ? 'input' : 'button')}>{inputType === 'button' ? 'Pasar a input' : 'Pasar a button'}</button>
+            <button className = 'btnIncrementar m-2' onClick={() => setInputType(inputType === 'button' ? 'input' : 'button')}>{inputType === 'button' ? 'Pasar a input' : 'Pasar a button'}</button>
           </div>:
           <div className='itemCount mx-auto'> 
             <button onClick={() => navigate('/')} className = 'btnIncrementar me-2'>Seguir comprando</button>

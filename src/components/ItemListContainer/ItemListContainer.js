@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import { getNotes } from '../../asyncMock'
 import { getProductByCat, getProducts } from '../../asyncMock'
 import ItemList from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
+import { NotificationContext } from '../../Notification/NotificationServices';
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 
 
@@ -13,17 +16,49 @@ const ItemListContainer = ({ greeting }) =>  {
   
   const {categoryId} = useParams();
   // console.log({categoryId})
+  const { setNotification } = useContext(NotificationContext);
 
   useEffect(()=>{
     setLoading(true);
-    const asyncFunction = categoryId ? getProductByCat : getProducts;
-    asyncFunction( categoryId ).then(response => {
-      // console.log(response);
-      setProducts(response);
+    
+    const collectionRef = categoryId 
+      ? query(collection(db, 'products'),where('category', '==', categoryId))
+      : collection(db, 'products');
+
+    getDocs(collectionRef).then(response => {
+      
+      const productsAdapted = response.docs.map(doc => {
+        const data = doc.data();
+        // console.log(data);
+        // console.log(data.galery);
+
+        let jsonArray = JSON.parse(data.galery);
+
+        return {id: doc.id, ...doc.data(),galery: jsonArray};
+      })
+      console.log(productsAdapted);
+      setProducts(productsAdapted);
+      // setProducts(response);
+    }).catch(error=>{
+      console.log(error);
+      setNotification(error,'error')
     }).finally(() => {
       setLoading(false);
     })
-  },[categoryId]);
+    
+    
+    
+    // const asyncFunction = categoryId ? getProductByCat : getProducts;
+    // asyncFunction( categoryId ).then(response => {
+    //   // console.log(response);
+    //   setProducts(response);
+    // }).catch(error=>{
+    //   console.log(error);
+    //   setNotification(error,'error')
+    // }).finally(() => {
+    //   setLoading(false);
+    // })
+  },[categoryId,setNotification]);
 
   
   // const notasMapped = notas.map(nota => <li key={nota.id}>{nota.title}</li>);
