@@ -43,8 +43,9 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
     // setStock(setStock - cant)
     if (cant <= stock)
     {
-      
-      const productToAdd  = {id, title, price, cant}
+      const img = '../assets/' + galery[0].url;
+      console.log(img);
+      const productToAdd  = { id, title, price, cant, img }
       setCantSel(cant);
       if (addItem(productToAdd)){
         // cant > 1 ? console.log(`Se agregaron ${cant} unidades al carrito`) : console.log('Se agregó 1 unidad al carrito.');
@@ -97,7 +98,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
 
       <div className="card-addProd">
         <h2>{title}</h2>
-        <h5 className="m-4 text-muted">{price}</h5>
+        <h5 className="m-4 text-muted"> ${new Intl.NumberFormat().format(price)}  </h5>
         {cantSel === 0 ? 
           <div>
             <Count stock={stock} onAdd={onAddhandler}/> 

@@ -1,0 +1,76 @@
+
+.tabla th {
+  background-color: gray;
+  color: #fff;
+  letter-spacing: 2px;
+  padding: 5px 8px;
+  text-transform: uppercase; }
+
+.tabla td {
+  border-bottom: 1px solid black;
+  padding: 5px 8px; }
+
+.tabla tr:hover {
+  background: linear-gradient(90deg, #fff 0%, lightgray 90%); }
+
+
+#cant {
+  width: 3.2rem;
+  padding: 10px;
+  margin: 1rem; }
+
+#sumaCant, #restaCant {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem; }
+
+.priority-4 {
+  display: none; }
+  @media screen and (min-width: 768px) {
+    .priority-4 {
+      display: table-cell; } }
+
+.priority-5 {
+  display: none; }
+  @media screen and (min-width: 768px) {
+    .priority-5 {
+      display: table-cell; } }
+
+#secCarro {
+  margin: auto;
+  padding: 0.5rem;
+  display: inline-block;
+  border: solid 1px black;
+  font-size: 14px; }
+  #secCarro p {
+    text-align: end;
+    padding: 0.5rem; }
+  @media screen and (min-width: 992px) {
+    #secCarro {
+      font-size: 16px; } }
+
+@media screen and (min-width: 992px) {
+  .modal-dialog {
+    max-width: 600px; } }
+
+.modal-content {
+  text-align: center; }
+
+.oculta {
+  display: none; }
+
+#linkCarro {
+  position: absolute;
+  top: 1rem;
+  right: 100px;
+  cursor: pointer; }
+  @media screen and (min-width: 768px) {
+    #linkCarro {
+      right: 2rem; } }
+
+@media screen and (min-width: 768px) {
+  #linkLog {
+    position: absolute;
+    top: 1rem;
+    right: 120px;
+    cursor: pointer; } }

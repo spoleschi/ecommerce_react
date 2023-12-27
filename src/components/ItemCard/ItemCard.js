@@ -9,7 +9,7 @@ function ItemCard( {id, title, price, galery} ) {
       <Card.Body>
         <Card.Title style={{ height: '8rem', margin:'1px', padding:'2.5px', overflow: 'hidden'}}>{title}</Card.Title>
         <Card.Text>
-          {price}
+          ${new Intl.NumberFormat().format(price)} 
         </Card.Text>
         <Link to={`/detail/${id}`} className='btn btn-dark'>Ver detalle</Link>
       </Card.Body>
