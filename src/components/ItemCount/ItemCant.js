@@ -10,7 +10,7 @@ const ItemCant = ({ stock, onAdd })=> {
 		}}
  
   return (
-    <div className=" ">
+    <div className="itemCount mx-auto">
 			<div className='contador mx-auto'>
 				Cant:
 				<input type='number' onChange={handleChange} value={count} style={{width:'60px', height:'25px'}}/>

@@ -106,7 +106,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
           </div>:
           <div className='itemCount mx-auto'> 
             <button onClick={() => navigate('/')} className = 'btnIncrementar me-2'>Seguir comprando</button>
-            <Link to='/' className = 'btnIncrementar'>Finalizar compra</Link> 
+            <Link to='/Cart' className = 'btnIncrementar'>Finalizar compra</Link> 
           </div>
         }
       </div>

@@ -24,7 +24,7 @@ const Cart = () => {
   else
   {
     return  <section id= "secCarro" className='m-4'>
-              <h5 class="modal-title">Carrito de compras</h5>
+              <h5 className="modal-title">Carrito de compras</h5>
               <table className="tabla d-flex mt-2 mb-2">
                 <tbody id="carrito" >
                   <tr>
