@@ -20,16 +20,19 @@ const ItemDetailContainer = ({ id }) =>  {
     // console.log({ productId });
     // console.log(productId);
    
-    const docRef = doc(db,'productsNew', productId);
+    const docRef = doc(db,'products3', productId);
    
     getDoc(docRef).then(response => {
       // const data = response.data();
 
       console.log(response.data());
 
-      let jsonArray = JSON.parse(response.data().galery);
+      //Cuando tenía la galery en un json
+      // let jsonArray = JSON.parse(response.data().galery);
+      // const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
 
-      const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
+      const productAdapted = {id: response.id, ...response.data()};
+
       setProduct(productAdapted);
     }).finally(() => {
         setLoading(false);
