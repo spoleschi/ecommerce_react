@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 // import { getNotes } from '../../asyncMock'
-import { getProductByCat, getProducts } from '../../asyncMock'
+// import { getProductByCat, getProducts } from '../../asyncMock'
 import ItemList from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
 import { NotificationContext } from '../../Notification/NotificationServices';
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../../services/firebase";
+// import { createProducts } from "../../AsyncMock3";
 
 
 
@@ -13,17 +14,17 @@ const ItemListContainer = ({ greeting }) =>  {
 //  const [notas, setNotas] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   const {categoryId} = useParams();
   // console.log({categoryId})
   const { setNotification } = useContext(NotificationContext);
 
   useEffect(()=>{
     setLoading(true);
-    
+    // createProducts();
     const collectionRef = categoryId 
-      ? query(collection(db, 'products'),where('category', '==', categoryId))
-      : collection(db, 'products');
+      ? query(collection(db, 'productsNew'),where('category', '==', categoryId))
+      : collection(db, 'productsNew');
 
     getDocs(collectionRef).then(response => {
       

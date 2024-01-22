@@ -30,15 +30,15 @@ export const CartProvider2 = ( {children} ) => {
 	} 
 	
 	const removeProduct = (id) => {
-		const restarCant = getProductQuantityAndPrice(id).cant;
-		const restarPrice = getProductQuantityAndPrice(id).price;
+		const restarCant = getProdQuantPrice(id).cant;
+		const restarPrice = getProdQuantPrice(id).price;
 		const cartNew = cart.filter(prod => prod.id !== id);
 		setCart(cartNew);
 		setCantTot(cantTot-Number(restarCant));
 		setTotal(total-Number(restarCant*restarPrice));
 	}
 
-	const getProductQuantityAndPrice = (id) => {
+	const getProdQuantPrice = (id) => {
 		const product = cart.find(prod => prod.id === id)
 	
 		return {cant:product?.cant, price:product?.price}
@@ -52,7 +52,7 @@ export const CartProvider2 = ( {children} ) => {
 
 
 	return (
-		<CartContext2.Provider value={{ cart, cantTot,total, addItem,removeProduct, clearCart }}>
+		<CartContext2.Provider value={{ cart, cantTot,total, addItem,removeProduct, clearCart, getProdQuantPrice }}>
 			{children}
 		</CartContext2.Provider>
 	)

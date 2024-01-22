@@ -1,8 +1,8 @@
 import { React, useState } from 'react';
 import './ItemCount.css';
 
-const ItemCant = ({ stock, onAdd })=> {
-	const [count, setCount] = useState(1); 
+const ItemCant = ({ stock, onAdd, initialQuant = 1 })=> {
+	const [count, setCount] = useState(initialQuant); 
 
 	const handleChange = (e) => {
 		if(e.target.value > 0 && e.target.value <= stock ) {

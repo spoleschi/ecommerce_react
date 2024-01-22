@@ -1,9 +1,9 @@
 import { React, useState } from 'react';
 import './ItemCount.css';
 
-function ItemCount ({ stock, onAdd }){
+function ItemCount ({ stock, onAdd, initialQuant = 1 }){
 
-  const [count, setCount] = useState(1); 
+  const [count, setCount] = useState(initialQuant); 
   return(    
     <div className="itemCount mx-auto">
       <div className="contador">

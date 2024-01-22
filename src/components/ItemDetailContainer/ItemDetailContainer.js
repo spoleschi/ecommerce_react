@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { getNotes } from '../../asyncMock'
-import { getProductById } from '../../asyncMock';
+// import { getProductById } from '../../asyncMock';
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
@@ -20,7 +20,7 @@ const ItemDetailContainer = ({ id }) =>  {
     // console.log({ productId });
     // console.log(productId);
    
-    const docRef = doc(db,'products', productId);
+    const docRef = doc(db,'productsNew', productId);
    
     getDoc(docRef).then(response => {
       // const data = response.data();

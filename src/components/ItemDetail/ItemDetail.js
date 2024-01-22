@@ -35,7 +35,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
   //   }
   // };
 
-  const {addItem} = useContext(CartContext2); 
+  const {addItem, getProdQuantPrice } = useContext(CartContext2); 
   // console.log (addItem);
   const { setNotification } = useContext(NotificationContext);
 
@@ -64,6 +64,10 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
 
 
   const Count = inputType === 'button' ? ItemCount : ItemCant
+
+  const cant = getProdQuantPrice(id).cant
+  // const cant = getProdQuantPrice(id).cant ? getProdQuantPrice(id).cant: 1;
+  console.log(galery);
 
   return (
     <Card className='border0'>
@@ -101,7 +105,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
         <h5 className="m-4 text-muted"> ${new Intl.NumberFormat().format(price)}  </h5>
         {cantSel === 0 ? 
           <div>
-            <Count stock={stock} onAdd={onAddhandler}/> 
+            <Count stock={stock} onAdd={onAddhandler} initialQuant={cant} /> 
             <button className = 'btnIncrementar m-2' onClick={() => setInputType(inputType === 'button' ? 'input' : 'button')}>{inputType === 'button' ? 'Pasar a input' : 'Pasar a button'}</button>
           </div>:
           <div className='itemCount mx-auto'> 
