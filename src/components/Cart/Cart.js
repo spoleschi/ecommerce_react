@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { CartContext2 } from '../../context/CartContext2'
 import CartItem from '../CartItem/CartItem';
 import './Cart.css';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
 
@@ -40,7 +41,8 @@ const Cart = () => {
                 </tbody>
               </table>
               <p><b> Total compra: <span className='p-3' id="total"> ${new Intl.NumberFormat().format(total)} </span> </b></p>
-              <button id="vaciar" className="btn btn-secondary" onClick={clearCart}>Vaciar</button>
+              <button id="vaciar" className="btn btn-secondary m-2" onClick={clearCart}>Vaciar</button>
+              <Link to='/checkout' className = 'btn btn-secondary m-2'>Finalizar compra</Link> 
             </section>
               
   }
