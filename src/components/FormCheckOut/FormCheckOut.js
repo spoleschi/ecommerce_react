@@ -33,7 +33,7 @@ const FormCheckOut = () => {
 
   return (
     <form className= 'formCheckOut mt-2' onSubmit={handleSubmit}>
-      <h3 class="panel-header panel-header-sticky">Datos de contacto</h3>
+      <h4>Datos de contacto</h4>
       <label>
         Nombre:
         <input
