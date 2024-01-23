@@ -23,8 +23,8 @@ const ItemListContainer = ({ greeting }) =>  {
     setLoading(true);
     // createProducts();
     const collectionRef = categoryId 
-      ? query(collection(db, 'productsNew'),where('category', '==', categoryId))
-      : collection(db, 'productsNew');
+      ? query(collection(db, 'products3'),where('category', '==', categoryId))
+      : collection(db, 'products3');
 
     getDocs(collectionRef).then(response => {
       
@@ -33,9 +33,12 @@ const ItemListContainer = ({ greeting }) =>  {
         // console.log(data);
         // console.log(data.galery);
 
-        let jsonArray = JSON.parse(data.galery);
+        //cuando tenía la galery en un json
+        // let jsonArray = JSON.parse(data.galery);
+        // return {id: doc.id, ...doc.data(),galery: jsonArray};
 
-        return {id: doc.id, ...doc.data(),galery: jsonArray};
+        return {id: doc.id, ...doc.data()};
+
       })
       console.log(productsAdapted);
       setProducts(productsAdapted);
