@@ -29,7 +29,7 @@ const ItemListContainer = ({ greeting }) =>  {
     getDocs(collectionRef).then(response => {
       
       const productsAdapted = response.docs.map(doc => {
-        const data = doc.data();
+        // const data = doc.data();
         // console.log(data);
         // console.log(data.galery);
 
@@ -40,7 +40,7 @@ const ItemListContainer = ({ greeting }) =>  {
         return {id: doc.id, ...doc.data()};
 
       })
-      console.log(productsAdapted);
+      // console.log(productsAdapted);
       setProducts(productsAdapted);
       // setProducts(response);
     }).catch(error=>{
@@ -49,7 +49,6 @@ const ItemListContainer = ({ greeting }) =>  {
     }).finally(() => {
       setLoading(false);
     })
-    
     
     
     // const asyncFunction = categoryId ? getProductByCat : getProducts;
@@ -62,7 +61,7 @@ const ItemListContainer = ({ greeting }) =>  {
     // }).finally(() => {
     //   setLoading(false);
     // })
-  },[categoryId,setNotification]);
+  },[categoryId]);
 
   
   // const notasMapped = notas.map(nota => <li key={nota.id}>{nota.title}</li>);

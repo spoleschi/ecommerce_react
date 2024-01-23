@@ -14,7 +14,7 @@ import { useState,useEffect } from 'react';
 import { getDocs, collection, query, orderBy } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 
-import Navbar2 from './Navbar'
+// import Navbar2 from './Navbar'
 
 function NavScroll() {
 
@@ -33,9 +33,8 @@ function NavScroll() {
         return { id: doc.id, ...doc.data()};
       });
       setCategories(categoriesAdapted);
-      console.log(categories);
     })
-  },[])
+  },[categories])
 
   //Tambien puedo navergar con el Hook useNavigate
   const navigate = useNavigate();

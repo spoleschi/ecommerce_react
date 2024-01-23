@@ -27,13 +27,11 @@ export const NotificationContext = createContext();
 export const NotificationProvider = ( {children} ) => {
 	const [message, setMessage] = useState('');
 	const [status, setStatus] = useState('success');
-	console.log(message,status)
+	// console.log(message,status)
 	
 	const setNotification = (msg,severity) => {
 			setMessage(msg)
-      console.log(msg);
 			setStatus(severity)
-			console.log(msg,severity)
 			setTimeout(() => {
 					setMessage('')
 			}, 3000)

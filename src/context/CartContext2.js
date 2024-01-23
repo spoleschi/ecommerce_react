@@ -11,10 +11,9 @@ export const CartProvider2 = ( {children} ) => {
 	const [cart, setCart] = useState([]);
 	const [cantTot, setCantTot] = useState(0);
 	const [total, setTotal] = useState(0);
-	console.log(cart);
 
 	const addItem = (productToAdd) => {
-		console.log(productToAdd)
+		// console.log(productToAdd)
 		if (!isInCart(productToAdd.id)){
 			setCart ([...cart,productToAdd]);
 			setCantTot(cantTot+Number(productToAdd.cant));
