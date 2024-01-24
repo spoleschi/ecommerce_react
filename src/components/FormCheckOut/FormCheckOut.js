@@ -1,38 +1,9 @@
-import React, { useState, useContext } from 'react';
 import "./FormCheckOut.css";
-import { NotificationContext } from '../../Notification/NotificationServices';
 
-const FormCheckOut = () => {
-
-  const { setNotification } = useContext(NotificationContext);
-
-  const [datos, setDatos] = useState({
-    nombre: '',
-    email: '',
-    direccion: '',
-    telefono: '',
-  });
-
-  const handleChange = (event) => {
-    setDatos({
-      ...datos,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (!datos.nombre || !datos.telefono || !datos.direccion || !datos.email) {
-      setNotification('error', 'Por favor rellene los campos obligatorios.');
-    } else {
-
-    // Aquí puedes realizar acciones con los datos, como enviarlos a un servidor o mostrarlos en la consola.
-    console.log(datos);
-  }};
+const FormCheckOut = ( {handleSubmit,handleChange, datos} ) => {
 
   return (
-    <form className= 'formCheckOut mt-2' onSubmit={handleSubmit}>
+    <form className= 'formCheckOut mt-2' onSubmit={(event)=>handleSubmit(event)}>
       <h4>Datos de contacto</h4>
       <label>
         Nombre:
@@ -40,7 +11,7 @@ const FormCheckOut = () => {
           type="text"
           name="nombre"
           value={datos.nombre}
-          onChange={handleChange}
+          onChange={(event)=>handleChange(event)}
         />
       </label>
       <br />
@@ -50,7 +21,7 @@ const FormCheckOut = () => {
           type="email"
           name="email"
           value={datos.email}
-          onChange={handleChange}
+          onChange={(event)=>handleChange(event)}
         />
       </label>
       <br />
@@ -60,7 +31,7 @@ const FormCheckOut = () => {
           type="text"
           name="direccion"
           value={datos.direccion}
-          onChange={handleChange}
+          onChange={(event)=>handleChange(event)}
         />
       </label>
       <br />
@@ -70,7 +41,7 @@ const FormCheckOut = () => {
           type="tel"
           name="telefono"
           value={datos.telefono}
-          onChange={handleChange}
+          onChange={(event)=>handleChange(event)}
         />
       </label>
       <br />
