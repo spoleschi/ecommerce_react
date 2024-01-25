@@ -11,7 +11,10 @@ const ItemList = ( props ) => {
     // <div style={{ display: 'flex',justifyContent:'space-around',flexWrap:'wrap' }}>
     <div className="contenedor">
       {/* {props.notas.map(prod => <Item key= {prod.id} {...prod} />)}     */}
-      {props.products.map(prod => <ItemCard key= {prod.id} {...prod} />)}
+      {props.products.length > 0
+        ?props.products.map(prod => <ItemCard key= {prod.id} {...prod} />)
+        :<p>No hay productos</p>
+      }
     </div>
       
   )
@@ -19,3 +22,4 @@ const ItemList = ( props ) => {
 
 export default ItemList;
 // export default memo(ItemList);
+
