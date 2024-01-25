@@ -1,10 +1,16 @@
 import React, { useState, useContext } from 'react';
 import FormCheckOut from '../FormCheckOut/FormCheckOut';
 import { NotificationContext } from '../../Notification/NotificationServices';
+import { CartContext2 } from '../../context/CartContext2'
+import { addDoc,collection } from 'firebase/firestore';
+import { db } from '../../services/firebase';
+import { useNavigate } from 'react-router-dom'; 
 
 const CheckOut = () => {
 
   const { setNotification } = useContext(NotificationContext);
+  const { cart, clearCart, total } = useContext(CartContext2);
+  const navigate = useNavigate();
 
   const [datos, setDatos] = useState({
     nombre: '',
@@ -22,6 +28,9 @@ const CheckOut = () => {
 
   function validateDatos(datos) {
     const validationErrors = {};
+
+    // if (!datos.nombre || !datos.telefono || !datos.direccion || !datos.email) {
+    // Validar campos
   
     // Validar nombre
     if (datos.nombre.length < 3) {
@@ -46,13 +55,10 @@ const CheckOut = () => {
     return validationErrors;
   }
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // if (!datos.nombre || !datos.telefono || !datos.direccion || !datos.email) {
-      // Validar campos
-  const validationErrors = validateDatos(datos);
+   const validationErrors = validateDatos(datos);
   if ( Object.entries(validationErrors).length !== 0) {
 
     // const a = validationErrors.length();
@@ -66,9 +72,34 @@ const CheckOut = () => {
 
     setNotification(`Error. ${error}`, 'Por favor rellene los campos obligatorios.');
   } else {
-    // Aquí puedes realizar acciones con los datos, como enviarlos a un servidor o mostrarlos en la consola.
     console.log(datos);
+    createOrder()
   }};
+
+  const createOrder = () => {
+    const order = {
+      buyer: {
+        name: datos.nombre,
+        email: datos.email,
+        phone: datos.telefono,
+        dom: datos.direccion,
+      },
+      items: cart,
+      total: total
+    };
+
+    const collectionRef = collection(db,'orders');
+    addDoc(collectionRef,order).then(response => {
+      console.log(response.id);
+      clearCart();
+      setNotification(`Se ha generado la orden de compra con el código ${response.id}`, 'success') ;
+      setTimeout(() => {
+        navigate('/');
+    }, 4000)
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 
   return (
       <FormCheckOut handleSubmit = {handleSubmit} handleChange = {handleChange} datos = {datos} />

@@ -26,7 +26,6 @@ const FormCheckOut = ( {handleSubmit,handleChange, datos} ) => {
           onChange={(event)=>handleChange(event)}
         />
       </label>
-      <br />
       <label>
         Dirección:
         <input
@@ -37,7 +36,6 @@ const FormCheckOut = ( {handleSubmit,handleChange, datos} ) => {
           onChange={(event)=>handleChange(event)}
         />
       </label>
-      <br />
       <label>
         Teléfono:
         <input
@@ -48,7 +46,6 @@ const FormCheckOut = ( {handleSubmit,handleChange, datos} ) => {
           onChange={(event)=>handleChange(event)}
         />
       </label>
-      <br />
       <button className= "btn btn-secondary" type="submit">Generar pedido</button>
     </form>
   );

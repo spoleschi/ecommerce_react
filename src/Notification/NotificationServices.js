@@ -34,7 +34,7 @@ export const NotificationProvider = ( {children} ) => {
 			setStatus(severity)
 			setTimeout(() => {
 					setMessage('')
-			}, 3000)
+			}, 4000)
 	}
 
 
