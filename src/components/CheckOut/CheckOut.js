@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import FormCheckOut from '../FormCheckOut/FormCheckOut';
 import { NotificationContext } from '../../Notification/NotificationServices';
 import { CartContext2 } from '../../context/CartContext2'
-import { addDoc,collection } from 'firebase/firestore';
+import { addDoc,collection, documentId, getDocs, query, where, writeBatch } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 import { useNavigate } from 'react-router-dom'; 
 
@@ -59,24 +59,26 @@ const CheckOut = () => {
     event.preventDefault();
 
    const validationErrors = validateDatos(datos);
-  if ( Object.entries(validationErrors).length !== 0) {
+    if ( Object.entries(validationErrors).length !== 0) {
 
-    // const a = validationErrors.length();
-    // console.log(a);
-    let error = Object.values(validationErrors)[0];
-     
-    // let errores = '';
-    // for (const property in validationErrors) {
-    //   errores +=  `${property}: ${validationErrors[property]}`;
-    // }
+      // const a = validationErrors.length();
+      // console.log(a);
+      let error = Object.values(validationErrors)[0];
+      
+      // let errores = '';
+      // for (const property in validationErrors) {
+      //   errores +=  `${property}: ${validationErrors[property]}`;
+      // }
 
-    setNotification(`Error. ${error}`, 'Por favor rellene los campos obligatorios.');
-  } else {
-    console.log(datos);
-    createOrder()
-  }};
+      setNotification(`Error. ${error}`, 'Por favor rellene los campos obligatorios.');
+    } else {
+      console.log(datos);
+      createOrder()
+    }
+  };
 
-  const createOrder = () => {
+  const createOrder = async () => {
+    
     const order = {
       buyer: {
         name: datos.nombre,
@@ -88,22 +90,59 @@ const CheckOut = () => {
       total: total
     };
 
-    const collectionRef = collection(db,'orders');
-    addDoc(collectionRef,order).then(response => {
-      console.log(response.id);
-      clearCart();
-      setNotification(`Se ha generado la orden de compra con el código ${response.id}`, 'success') ;
-      setTimeout(() => {
-        navigate('/');
-    }, 4000)
-    }).catch(error => {
-      console.log(error);
-    });
-  }
+    try{
+      const batch = writeBatch(db);
+      const outOffStock = [];
+      const ids = cart.map(prod => prod.id);
+      const productRef = collection(db,'products3');
+  
+      const productsAddedInBD = await getDocs(query(productRef,where(documentId(),'in',ids)));
+      const { docs } = productsAddedInBD;
+      docs.forEach( doc => {
+        const stockDB = doc.data().stock;
+        const productsAddedToCart = cart.find(prod => prod.id === doc.id );
+        const cantProd = productsAddedToCart?.cant;
+        if (stockDB >= cantProd)
+          batch.update(doc.ref,{ stock: stockDB - cantProd });
+        else
+          outOffStock.push({id: doc.id, ...doc.data()});
+        console.log(outOffStock);
+      })
 
-  return (
-      <FormCheckOut handleSubmit = {handleSubmit} handleChange = {handleChange} datos = {datos} />
-  )
+      if (outOffStock.length === 0) {
+        await batch.commit();
+        const collectionRef = collection(db,'orders');
+        const orderAdded = await addDoc(collectionRef,order);
+        clearCart();
+        setNotification(`Se ha generado la orden de compra con el código: ${orderAdded.id}`, 'success') ;
+        setTimeout(() => {navigate('/');}, 4000);
+      }
+      else{
+        const prodsSinStock = outOffStock.map(prod => prod.title);
+        console.log(prodsSinStock.toString());
+        setNotification(`No hay stock de los siguientes productos: ${prodsSinStock.toString()}`, 'error') ;
+      }
+
+    }catch(error){
+      console.log(error);
+    }
+
+    // const collectionRef = collection(db,'orders');
+    // addDoc(collectionRef,order).then(response => {
+    //   console.log(response.id);
+    //   clearCart();
+    //   setNotification(`Se ha generado la orden de compra con el código ${response.id}`, 'success') ;
+    //   setTimeout(() => {
+    //     navigate('/');
+    // }, 4000)
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+  
+  }  
+    return (
+        <FormCheckOut handleSubmit = {handleSubmit} handleChange = {handleChange} datos = {datos} />
+    )
 }
 
 export default CheckOut
