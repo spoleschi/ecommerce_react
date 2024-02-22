@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 // import { getProductById } from '../../asyncMock';
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams, useNavigate } from "react-router-dom";
-import { getDoc, doc } from "firebase/firestore";
-import { db } from "../../services/firebase";
-
+import { getProduct } from "../../services/firebase/Firestore/products";
 
 const ItemDetailContainer = ({ id }) =>  {
 //  const [notas, setNotas] = useState([]);
@@ -16,26 +14,28 @@ const ItemDetailContainer = ({ id }) =>  {
   // console.log(productId);
 
   useEffect(()=>{
-    // console.log('entra'); 
-    // console.log({ productId });
-    // console.log(productId);
+    // const docRef = doc(db,'products3', productId);
    
-    const docRef = doc(db,'products3', productId);
-   
-    getDoc(docRef).then(response => {
-      // const data = response.data();
+    // getDoc(docRef).then(response => {
+    //   // const data = response.data();
 
-      console.log(response.data());
+    //   //Cuando tenía la galery en un json
+    //   // let jsonArray = JSON.parse(response.data().galery);
+    //   // const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
 
-      //Cuando tenía la galery en un json
-      // let jsonArray = JSON.parse(response.data().galery);
-      // const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
+    //   const productAdapted = {id: response.id, ...response.data()};
 
-      const productAdapted = {id: response.id, ...response.data()};
+    //   setProduct(productAdapted);
+    // }).finally(() => {
+    //     setLoading(false);
+    // })
 
-      setProduct(productAdapted);
-    }).finally(() => {
-        setLoading(false);
+    getProduct(productId).then((resolve) => {
+      setProduct(resolve);
+    }).catch(error => {
+      console.log(error);
+    }).finally(()=> {
+      setLoading(false);
     })
 
 
@@ -46,6 +46,7 @@ const ItemDetailContainer = ({ id }) =>  {
     // .finally(() => {
     //   setLoading(false);
     // })
+    
   },[productId]);
 
   

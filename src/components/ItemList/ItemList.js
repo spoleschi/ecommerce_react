@@ -13,7 +13,7 @@ const ItemList = ( props ) => {
       {/* {props.notas.map(prod => <Item key= {prod.id} {...prod} />)}     */}
       {props.products.length > 0
         ?props.products.map(prod => <ItemCard key= {prod.id} {...prod} />)
-        :<p>No hay productos</p>
+        :<p>{props.error}</p>
       }
     </div>
       
