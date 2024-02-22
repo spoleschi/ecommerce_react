@@ -60,8 +60,10 @@ const ItemDetailContainer = ({ id }) =>  {
 
   return (
     <div>
-      <ItemDetail {...product}/>
-      <button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)}> Volver </button>
+      {product.length > 0
+        ?<ItemDetail {...product}/>
+        :<button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)}> Volver </button>
+      }
     </div>
   )
 }

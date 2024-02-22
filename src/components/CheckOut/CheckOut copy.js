@@ -1,18 +1,17 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import FormCheckOut from '../FormCheckOut/FormCheckOut';
 import { NotificationContext } from '../../Notification/NotificationServices';
 import { CartContext2 } from '../../context/CartContext2'
-//import { addDoc,collection, documentId, getDocs, query, where, writeBatch } from 'firebase/firestore';
-//import { db } from '../../services/firebase';
-//import { useNavigate } from 'react-router-dom'; 
-import { insertOrder } from '../../services/firebase/Firestore/orders';
+import { addDoc,collection, documentId, getDocs, query, where, writeBatch } from 'firebase/firestore';
+import { db } from '../../services/firebase';
+import { useNavigate } from 'react-router-dom'; 
 
 const CheckOut = () => {
 
   const { setNotification } = useContext(NotificationContext);
   const { cart, clearCart, total } = useContext(CartContext2);
-  //const navigate = useNavigate();
-  const [orderStatus, setOrderStatus] = useState(null);
+  const navigate = useNavigate();
+
   const [datos, setDatos] = useState({
     nombre: '',
     email: '',
@@ -92,30 +91,40 @@ const CheckOut = () => {
     };
 
     try{
-            
-      const result  = await insertOrder(order)
+      const batch = writeBatch(db);
+      const outOffStock = [];
+      const ids = cart.map(prod => prod.id);
+      const productRef = collection(db,'products3');
+  
+      const productsAddedInBD = await getDocs(query(productRef,where(documentId(),'in',ids)));
+      const { docs } = productsAddedInBD;
+      docs.forEach( doc => {
+        const stockDB = doc.data().stock;
+        const productsAddedToCart = cart.find(prod => prod.id === doc.id );
+        const cantProd = productsAddedToCart?.cant;
+        if (stockDB >= cantProd)
+          batch.update(doc.ref,{ stock: stockDB - cantProd });
+        else
+          outOffStock.push({id: doc.id, ...doc.data()});
+        console.log(outOffStock);
+      })
 
-      setOrderStatus(result);
-
-      if (orderStatus)
+      if (outOffStock.length === 0) {
+        await batch.commit();
+        const collectionRef = collection(db,'orders');
+        const orderAdded = await addDoc(collectionRef,order);
         clearCart();
-
-
-      // if (idNewOrder)
-      // {
-      //   console.log(insertOrder);
-      //   clearCart();
-      //   setNotification(`Se ha generado la orden de compra con el código: ${idNewOrder}`, 'success') ;
-      //   setTimeout(() => {navigate('/');}, 4000);
-      // }
-      // else{
-      //   const prodsSinStock = outOffStock.map(prod => prod.title);
-      //   console.log(prodsSinStock.toString());
-      //   setNotification(`No hay stock de los siguientes productos: ${prodsSinStock.toString()}`, 'error') ;
-      // }
+        setNotification(`Se ha generado la orden de compra con el código: ${orderAdded.id}`, 'success') ;
+        setTimeout(() => {navigate('/');}, 4000);
+      }
+      else{
+        const prodsSinStock = outOffStock.map(prod => prod.title);
+        console.log(prodsSinStock.toString());
+        setNotification(`No hay stock de los siguientes productos: ${prodsSinStock.toString()}`, 'error') ;
+      }
 
     }catch(error){
-      setNotification(String(error), 'error');
+      console.log(error);
     }
 
     // const collectionRef = collection(db,'orders');
@@ -132,8 +141,8 @@ const CheckOut = () => {
   
   }  
     return (
-        <FormCheckOut handleSubmit = {handleSubmit} handleChange = {handleChange} datos = {datos} orderStatus = {orderStatus}/>
+        <FormCheckOut handleSubmit = {handleSubmit} handleChange = {handleChange} datos = {datos} />
     )
 }
 
-export default CheckOut;
+export default CheckOut

@@ -14,23 +14,18 @@ const ItemListContainer = ({ greeting }) =>  {
 //  const [notas, setNotas] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [textError, setTextError] = useState('');
+  const [textError] = useState('');
 
   const {categoryId} = useParams();
   // console.log({categoryId})
   const { setNotification } = useContext(NotificationContext);
   
-
   useEffect(()=>{
     setLoading(true);
-    setNotification('Buscando productos','error');
     getProducts(categoryId).then(products => {
       setProducts(products);
-      console.log('Llega acá?')
     }).catch(error=> {
       setNotification(String(error),'error');
-      setTextError(String(error));
-      //console.log(error);
     }).finally(() => {
       setLoading(false);
     })
