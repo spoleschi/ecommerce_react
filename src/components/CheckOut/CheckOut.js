@@ -12,7 +12,11 @@ const CheckOut = () => {
   const { setNotification } = useContext(NotificationContext);
   const { cart, clearCart, total } = useContext(CartContext2);
   //const navigate = useNavigate();
-  const [orderStatus, setOrderStatus] = useState(null);
+  const [orderStatus, setOrderStatus] = useState({
+    success: false,
+    id: 0,
+    outOfStock:  []
+  });
   const [datos, setDatos] = useState({
     nombre: '',
     email: '',
@@ -95,10 +99,14 @@ const CheckOut = () => {
             
       const result  = await insertOrder(order)
 
+      console.log(result);
       setOrderStatus(result);
 
-      if (orderStatus)
+      if (result.success)
+      {
+        console.log("entro y debería limpiar el carro")
         clearCart();
+      }
 
 
       // if (idNewOrder)
@@ -115,6 +123,7 @@ const CheckOut = () => {
       // }
 
     }catch(error){
+      console.log(String(error))
       setNotification(String(error), 'error');
     }
 

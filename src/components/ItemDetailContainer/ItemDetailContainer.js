@@ -57,13 +57,16 @@ const ItemDetailContainer = ({ id }) =>  {
   }
   
   // console.log(product);
-
   return (
     <div>
-      {product.length > 0
-        ?<ItemDetail {...product}/>
+      {!(product === undefined)
+        ?<>
+          <ItemDetail {...product}/>
+          <button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)}> Volver </button>
+        </>
         :<button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)}> Volver </button>
       }
+
     </div>
   )
 }

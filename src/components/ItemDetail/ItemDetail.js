@@ -56,10 +56,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
       // setStock(stock-cant); 
     }
     else
-    {
-      console.log('No hay stock suficiente.');
-      alert('No hay stock suficiente');
-    }
+      setNotification('No hay stock suficiente', 'error');
   };
 
 
@@ -67,7 +64,7 @@ const ItemDetail = ( {id, title, price, galery,stock, desc} ) => {
 
   const cant = getProdQuantPrice(id).cant
   // const cant = getProdQuantPrice(id).cant ? getProdQuantPrice(id).cant: 1;
-  console.log(galery);
+  // console.log(galery);
 
   return (
     <Card className='border0'>
