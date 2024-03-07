@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import FormCheckOut from '../FormCheckOut/FormCheckOut';
 import { NotificationContext } from '../../Notification/NotificationServices';
 import { CartContext2 } from '../../context/CartContext2'
@@ -24,6 +24,20 @@ const CheckOut = () => {
     telefono: '',
   });
   
+
+  // Cargar datos almacenados al montar el componente
+  useEffect(() => {
+    const storedData = JSON.parse(sessionStorage.getItem("datosOC"));
+    if (storedData) {
+      setDatos(storedData);
+    }
+  }, []);
+
+  // Guardar datos en el almacenamiento local al cambiar formData
+  useEffect(() => {
+    sessionStorage.setItem("datosOC", JSON.stringify(datos));
+  }, [datos]);
+
   const handleChange = (event) => {
     setDatos({
       ...datos,
@@ -106,6 +120,7 @@ const CheckOut = () => {
       {
         console.log("entro y debería limpiar el carro")
         clearCart();
+        sessionStorage.removeItem("datosOC");
       }
 
 

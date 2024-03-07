@@ -13,7 +13,7 @@ function ItemCard( {id, title, price, galery, stock} ) {
         </Card.Text>
         {stock > 0 
           ? <Link to={`/detail/${id}`} className='btn btn-dark'>Ver detalle</Link>
-          : <button className='btn btn-dark'>Sin stock</button>
+          : <Button variant="secondary" active>Sin stock</Button>
         }
       </Card.Body>
     </Card>

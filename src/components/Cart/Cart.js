@@ -41,6 +41,7 @@ const Cart = () => {
                 </tbody>
               </table>
               <p><b> Total compra: <span className='p-3' id="total"> ${new Intl.NumberFormat().format(total)} </span> </b></p>
+              <Link to='/' className = 'btn btn-secondary m-2'>Seguir comprando</Link> 
               <button id="vaciar" className="btn btn-secondary m-2" onClick={clearCart}>Vaciar</button>
               <Link to='/checkout' className = 'btn btn-secondary m-2'>Finalizar compra</Link> 
             </section>
