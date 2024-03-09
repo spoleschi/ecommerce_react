@@ -1,5 +1,6 @@
 import { addDoc,collection, documentId, getDocs, query, where, writeBatch } from 'firebase/firestore';
 import { db } from "..";
+import { createProductAdapted } from '../../../adapter/productAdapted';
 
 export const insertOrder = async (order) =>{
     const batch = writeBatch(db);
@@ -11,7 +12,8 @@ export const insertOrder = async (order) =>{
     const outOfStock = [];
     
     docs.forEach( doc => {
-      const stockDB = doc.data().stock;
+      // const stockDB = doc.data().stock;
+      const stockDB = createProductAdapted(doc).stock;
       console.log("stock de producto en bd:");
       console.log(stockDB);
       const productsAddedToCart = order.items.find(prod => prod.id === doc.id );

@@ -1,62 +1,26 @@
-import { useState, useEffect } from "react";
-// import { getNotes } from '../../asyncMock'
-// import { getProductById } from '../../asyncMock';
+import { useContext } from "react";
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProduct } from "../../services/firebase/Firestore/products";
+import { NotificationContext } from "../../Notification/NotificationServices";
+import { useAsync } from "../../hooks/useAsync";
 
 const ItemDetailContainer = ({ id }) =>  {
-//  const [notas, setNotas] = useState([]);
-  const [product, setProduct] = useState('');
-  const [loading, setLoading] = useState(true);
+
   const { productId } = useParams();
   const navigate = useNavigate();
-  // console.log(productId);
-
-  useEffect(()=>{
-    // const docRef = doc(db,'products3', productId);
-   
-    // getDoc(docRef).then(response => {
-    //   // const data = response.data();
-
-    //   //Cuando tenía la galery en un json
-    //   // let jsonArray = JSON.parse(response.data().galery);
-    //   // const productAdapted = {id: response.id, ...response.data(), galery: jsonArray};
-
-    //   const productAdapted = {id: response.id, ...response.data()};
-
-    //   setProduct(productAdapted);
-    // }).finally(() => {
-    //     setLoading(false);
-    // })
-
-    getProduct(productId).then((resolve) => {
-      setProduct(resolve);
-    }).catch(error => {
-      console.log(error);
-    }).finally(()=> {
-      setLoading(false);
-    })
-
-
-    // getProductById( {productId} ).then(response => {
-    //    setProduct(response);
-    // })
-    // .catch(error => console.log(error.message))
-    // .finally(() => {
-    //   setLoading(false);
-    // })
+  const { setNotification } = useContext(NotificationContext);
     
-  },[productId]);
-
-  
-  // const notasMapped = notas.map(nota => <li key={nota.id}>{nota.title}</li>);
+  const { data: product, error, loading } = useAsync(()=>getProduct(productId),[productId]);
   
   if (loading) {
     return <h1>Loading...</h1>
   }
   
-  // console.log(product);
+  if (error) {
+    setNotification(String(error),'error');
+  }
+
   return (
     <div>
       {!(product === undefined) && <ItemDetail {...product}/>}
