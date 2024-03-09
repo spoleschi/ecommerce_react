@@ -33,10 +33,12 @@ const Cart = () => {
                     <th>Cant.</th>
                     <th className="priority-5">Precio</th>
                     <th>Subtotal</th>
-                    <th>Quitar</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                   </tr>
                   {
-                    cart.map(prod => <CartItem key={prod.id} {...prod} />)
+                    cart.map(prod => <CartItem key={prod.id} {...prod} />) 
                   }
                 </tbody>
               </table>

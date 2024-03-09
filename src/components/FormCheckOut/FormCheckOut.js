@@ -7,7 +7,7 @@ const FormCheckOut = ( {handleSubmit,handleChange, datos, orderStatus} ) => {
   
   return (
     
-    <div>
+    <div className="mt-4">
 
       {orderStatus.id === 0 && orderStatus.outOfStock.length === 0
         ?<form className= 'formCheckOut mt-2' onSubmit={(event)=>handleSubmit(event)}>
@@ -65,9 +65,15 @@ const FormCheckOut = ( {handleSubmit,handleChange, datos, orderStatus} ) => {
               </>
             : 
               <> 
-                <p>Error al realizar el pedido.</p>
+                <p>No se puedo realizar el pedido.</p>
                 <p>Productos agotados:</p>
-                <p> {orderStatus.outOfStock.map(prod => prod.title).join(', ')}</p> 
+                {/* <p> {orderStatus.outOfStock.map(prod => prod.title).join(', ')}</p>  */}
+                <p>
+                  {orderStatus.outOfStock.map(prod => (
+                    <li key={prod.id}>{prod.title} - stock remanente: {prod.stock}</li>
+                  ))}
+                </p>
+
                 <button className = 'btnIncrementar mb-3' onClick={() => navigate(-1)  }> Volver al carrito </button>
               </>
             }  

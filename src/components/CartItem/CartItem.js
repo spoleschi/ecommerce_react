@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CartContext2 } from '../../context/CartContext2'
-import Card from 'react-bootstrap/Card';
-import ItemCount from '../ItemCount/ItemCount';
+//import Card from 'react-bootstrap/Card';
+//import ItemCount from '../ItemCount/ItemCount';
 
 const CartItem = ({id, title, price, cant, img}) => {
   // id, title, price, galery
@@ -40,6 +40,8 @@ const CartItem = ({id, title, price, cant, img}) => {
         <td>{cant}</td>
         <td className="priority-5">${new Intl.NumberFormat().format(price)}</td>
         <td>${new Intl.NumberFormat().format(price * cant)}</td>
+        <td><button className='btn btn-outline-secondary' onClick={()=>removeProduct(id)}>+</button></td>
+        <td><button className='btn btn-outline-secondary' onClick={()=>removeProduct(id)}>-</button></td>
         <td><button className='btn btn-outline-secondary' onClick={()=>removeProduct(id)}>X</button></td>
       </tr>
 
