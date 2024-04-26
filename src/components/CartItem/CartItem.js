@@ -1,15 +1,12 @@
-import React, { useContext } from 'react'
-import { CartContext2 } from '../../context/CartContext2'
+import { useCart } from '../../context/CartContext2'
 //import Card from 'react-bootstrap/Card';
 //import ItemCount from '../ItemCount/ItemCount';
 
 const CartItem = ({id, title, price, cant, img}) => {
   // id, title, price, galery
   // const { cart } = useContext(CartContext2);
-
-
-  
-  const { removeProduct } = useContext(CartContext2);
+ 
+  const { removeProduct } = useCart;
 
   return (
     // <div>
@@ -45,15 +42,9 @@ const CartItem = ({id, title, price, cant, img}) => {
         <td><button className='btn btn-outline-secondary' onClick={()=>removeProduct(id)}>X</button></td>
       </tr>
 
-
-
-
     // </div>
-
-
-
 
   )
 }
 
-export default CartItem
+export default CartItem;
